@@ -21,6 +21,16 @@ pub enum Clearable<C> {
     Set(C),
 }
 
+impl<C> Clearable<C> {
+    pub fn new(value: C) -> Clearable<C> {
+        Clearable::Set(value)
+    }
+
+    pub fn new_opt(value: C) -> Option<Clearable<C>> {
+        Some(Clearable::Set(value))
+    }
+}
+
 // Get new value for this item
 impl<C> Into<Option<C>> for Clearable<C> {
     fn into(self) -> Option<C> {
@@ -61,5 +71,14 @@ mod test {
 
         let foo = FOO.load(&storage).unwrap();
         assert_eq!(foo, Some(42));
+    }
+
+    #[test]
+    fn constructors() {
+        let clearable_new = Clearable::new(5u32);
+        assert_eq!(clearable_new, Clearable::Set(5u32));
+
+        let clearable_new_opt = Clearable::new_opt(6u32);
+        assert_eq!(clearable_new_opt, Some(Clearable::Set(6u32)))
     }
 }
