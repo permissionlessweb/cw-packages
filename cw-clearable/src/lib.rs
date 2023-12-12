@@ -1,3 +1,5 @@
+use cosmwasm_std::{Addr, Api, StdResult};
+
 /// A type representing a value that can either be cleared or set with a value of type `C`.
 /// ```
 /// use cosmwasm_std::{StdResult, Response, DepsMut};
@@ -28,6 +30,15 @@ impl<C> Clearable<C> {
 
     pub fn new_opt(value: C) -> Option<Clearable<C>> {
         Some(Clearable::Set(value))
+    }
+}
+
+impl Clearable<String> {
+    pub fn check(&self, api: &dyn Api) -> StdResult<Clearable<Addr>> {
+        match self {
+            Clearable::Clear => Ok(Clearable::Clear),
+            Clearable::Set(human) => Ok(Clearable::Set(api.addr_validate(human)?)),
+        }
     }
 }
 

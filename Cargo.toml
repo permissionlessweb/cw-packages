@@ -21,3 +21,4 @@ keywords = ["cosmos", "cosmwasm", "framework"]
 cosmwasm-schema = "1.5.0"
 cw-storage-plus = "1.2.0"
 cosmwasm-std = "1.5.0"
+cw-address-like = "1.0.4"
