@@ -1,7 +1,11 @@
 [package]
 name = "cw-clearable"
 version = "0.1.0"
-edition = "2021"
+authors = { workspace = true }
+edition = { workspace = true }
+license = { workspace = true }
+description = "Helper enum that allows to clear Optional state items"
+resolver = "2"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 

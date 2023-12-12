@@ -3,6 +3,20 @@ members = ["cw-*"]
 
 resolver = "2"
 
+[workspace.package]
+authors = [
+    "CyberHoward <cyberhoward@protonmail.com>",
+    "Riada <riada@abstract.money>",
+    "Abstract Money <contact@abstract.money>",
+]
+edition = "2021"
+homepage = "https://abstract.money"
+documentation = "https://docs.abstract.money/"
+repository = "https://github.com/AbstractSDK/abstract"
+license = "GPL-3.0-or-later"
+keywords = ["cosmos", "cosmwasm", "framework"]
+
+
 [workspace.dependencies]
 cosmwasm-schema = "1.5.0"
 cw-storage-plus = "1.2.0"
