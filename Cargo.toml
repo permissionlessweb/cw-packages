@@ -1,5 +1,5 @@
 [workspace]
-members = ["cw-*"]
+members = ["cw-*", "contracts/*"]
 
 resolver = "2"
 
