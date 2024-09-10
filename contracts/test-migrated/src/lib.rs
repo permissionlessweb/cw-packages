@@ -19,14 +19,14 @@ pub fn instantiate(
 
 #[entry_point]
 pub fn migrate(deps: DepsMut, env: Env, migrate_msg: InstantiateMsg) -> Result<Response, Never> {
-    // let contract_info = deps
-    //     .querier
-    //     .query_wasm_contract_info(&env.contract.address)
-    //     .unwrap();
-    // Only admin can call migrate on contract
-    // let sender = contract_info.admin.unwrap();
+    let contract_info = deps
+        .querier
+        .query_wasm_contract_info(&env.contract.address)
+        .unwrap();
+    // Safe assumption that sender is the admin, as only admin can call migrate on contract
+    let sender = contract_info.admin.unwrap();
     let message_info = MessageInfo {
-        sender: cosmwasm_std::Addr::unchecked(""),
+        sender,
         funds: vec![],
     };
     instantiate(deps, env, message_info, migrate_msg)
