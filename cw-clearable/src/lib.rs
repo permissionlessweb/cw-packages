@@ -43,9 +43,9 @@ impl Clearable<String> {
 }
 
 // Get new value for this item
-impl<C> Into<Option<C>> for Clearable<C> {
-    fn into(self) -> Option<C> {
-        match self {
+impl<C> From<Clearable<C>> for Option<C> {
+    fn from(value: Clearable<C>) -> Self {
+        match value {
             Clearable::Clear => None,
             Clearable::Set(val) => Some(val),
         }
