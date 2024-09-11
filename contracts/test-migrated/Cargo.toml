@@ -13,7 +13,7 @@ description = "This contract used for testing migration from cw-blob with predic
 [lib]
 crate-type = ["cdylib", "rlib"]
 
-# Daemon test requires local juno to run, after that use cargo test --test daemon 
+# Daemon test requires local juno to be running, after that use `cargo test --test daemon`
 [[test]]
 name = "daemon"
 test = false
