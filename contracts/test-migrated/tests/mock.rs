@@ -3,7 +3,6 @@ mod common;
 use cw_orch::mock::MockBech32;
 
 #[test]
-#[ignore = "cw_orch_mock bug wrong migrate called"]
 fn mock() {
     let chain = MockBech32::new("cosm");
     common::test(chain)

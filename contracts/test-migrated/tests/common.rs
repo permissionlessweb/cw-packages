@@ -5,11 +5,15 @@ use cw_orch::prelude::*;
 use cw_test_migrated::interface::MigratedBlob;
 
 pub fn test<T: CwEnv>(chain: T) {
+    let blob = CwBlob::new("blob", chain.clone());
+    blob.upload().unwrap();
+    let checksum = chain
+        .wasm_querier()
+        .code_id_hash(blob.code_id().unwrap())
+        .unwrap();
+
     let migrated_blob = MigratedBlob::new("migrated_blob", chain.clone());
     migrated_blob.upload().unwrap();
-    let checksum = <CwBlob<T> as Uploadable>::wasm(&ChainInfoOwned::config("foo".to_owned()))
-        .checksum()
-        .unwrap();
     let account_id: AccountId = chain.sender_addr().as_str().parse().unwrap();
     let prefix = account_id.prefix();
     let canon = account_id.to_bytes();
@@ -23,8 +27,6 @@ pub fn test<T: CwEnv>(chain: T) {
         Addr::unchecked(AccountId::new(prefix, &canon_address).unwrap().to_string());
     migrated_blob.set_address(&contract_address);
 
-    let blob = CwBlob::new("blob", chain.clone());
-    blob.upload().unwrap();
     blob.instantiate2(
         &cosmwasm_std::Empty {},
         Some(&chain.sender_addr()),
