@@ -821,6 +821,7 @@ dependencies = [
 name = "cw-blob"
 version = "0.1.0"
 dependencies = [
+ "cosmrs 0.20.0",
  "cosmwasm-std",
  "cw-orch",
 ]
@@ -846,26 +847,6 @@ dependencies = [
  "cw-utils",
  "schemars",
  "serde",
- "thiserror",
-]
-
-[[package]]
-name = "cw-multi-test"
-version = "2.1.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b0ae276e7a06ad1b7e7da78a3d68aba80634cde30ee7fe8259a94e653603fef8"
-dependencies = [
- "anyhow",
- "bech32",
- "cosmwasm-std",
- "cw-storage-plus",
- "cw-utils",
- "derivative",
- "itertools 0.13.0",
- "prost 0.13.2",
- "schemars",
- "serde",
- "sha2 0.10.8",
  "thiserror",
 ]
 
@@ -1033,9 +1014,9 @@ dependencies = [
  "cosmwasm-schema",
  "cosmwasm-std",
  "cw-blob",
- "cw-multi-test",
  "cw-orch",
  "cw-orch-daemon",
+ "cw-storage-plus",
 ]
 
 [[package]]

@@ -1,49 +1,61 @@
 use cosmrs::AccountId;
-use cosmwasm_std::{instantiate2_address, CanonicalAddr};
+use cosmwasm_std::{Binary, CanonicalAddr};
 use cw_blob::interface::CwBlob;
 use cw_orch::prelude::*;
 use cw_test_migrated::interface::MigratedBlob;
 
-pub fn test<T: CwEnv>(chain: T) {
-    let blob = CwBlob::new("blob", chain.clone());
-    blob.upload().unwrap();
-    let checksum = chain
+pub fn test<T: CwEnv>(chain: T, blob_code_id: u64) {
+    let first_migrated_blob = MigratedBlob::new("first_migrated", chain.clone());
+    let first_salt = Binary::new(b"first".to_vec());
+
+    let second_migrated_blob = MigratedBlob::new("second_migrated", chain.clone());
+    let second_salt = Binary::new(b"second".to_vec());
+
+    let expected_blob_addr = chain
         .wasm_querier()
-        .code_id_hash(blob.code_id().unwrap())
+        .instantiate2_addr(blob_code_id, &chain.sender_addr(), first_salt.clone())
         .unwrap();
+    let expected_blob_account_id: AccountId = expected_blob_addr.parse().unwrap();
+    let expected_blob_canon_addr: CanonicalAddr =
+        CanonicalAddr::from(expected_blob_account_id.to_bytes());
 
-    let migrated_blob = MigratedBlob::new("migrated_blob", chain.clone());
-    migrated_blob.upload().unwrap();
-    let account_id: AccountId = chain.sender_addr().as_str().parse().unwrap();
-    let prefix = account_id.prefix();
-    let canon = account_id.to_bytes();
-    let canon_address = instantiate2_address(
-        checksum.as_slice(),
-        &CanonicalAddr::from(canon),
-        b"cw20_base",
-    )
-    .unwrap();
-    let contract_address =
-        Addr::unchecked(AccountId::new(prefix, &canon_address).unwrap().to_string());
-    migrated_blob.set_address(&contract_address);
-
-    blob.instantiate2(
-        &cosmwasm_std::Empty {},
-        Some(&chain.sender_addr()),
-        &[],
-        cosmwasm_std::Binary::from(b"cw20_base"),
+    CwBlob::upload_and_migrate(
+        chain.clone(),
+        blob_code_id,
+        &first_migrated_blob,
+        &cw_test_migrated::InstantiateMsg {
+            key: b"foo".to_vec(),
+            value: b"bar".to_vec(),
+        },
+        expected_blob_canon_addr,
+        first_salt.clone(),
     )
     .unwrap();
 
-    migrated_blob
-        .migrate(
-            &cw_test_migrated::InstantiateMsg {
-                key: b"foo".to_vec(),
-                value: b"bar".to_vec(),
-            },
-            migrated_blob.code_id().unwrap(),
-        )
+    let expected_blob_addr = chain
+        .wasm_querier()
+        .instantiate2_addr(blob_code_id, &chain.sender_addr(), second_salt.clone())
         .unwrap();
-    let res = migrated_blob.raw_query(b"foo".to_vec()).unwrap();
-    assert_eq!(res, b"bar")
+    let expected_blob_account_id: AccountId = expected_blob_addr.parse().unwrap();
+    let expected_blob_canon_addr: CanonicalAddr =
+        CanonicalAddr::from(expected_blob_account_id.to_bytes());
+
+    CwBlob::upload_and_migrate(
+        chain,
+        blob_code_id,
+        &second_migrated_blob,
+        &cw_test_migrated::InstantiateMsg {
+            key: b"bar".to_vec(),
+            value: b"foo".to_vec(),
+        },
+        expected_blob_canon_addr,
+        second_salt.clone(),
+    )
+    .unwrap();
+
+    let res = first_migrated_blob.raw_query(b"foo".to_vec()).unwrap();
+    assert_eq!(res, b"bar");
+
+    let res = second_migrated_blob.raw_query(b"bar".to_vec()).unwrap();
+    assert_eq!(res, b"foo");
 }

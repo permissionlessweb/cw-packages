@@ -38,6 +38,6 @@ cw-orch = { version = "0.25" }
 cw-orch-daemon = { version = "0.25.0" }
 
 [dev-dependencies]
-cw-multi-test = { version = "2.1", features = ["cosmwasm_2_0"] }
 cw-blob = { path = "../cw-blob" }
 cosmrs = "0.20.0"
+cw-storage-plus = { workspace = true }
