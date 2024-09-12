@@ -32,8 +32,8 @@ pub mod interface {
     }
 
     impl<T: CwEnv> CwBlob<T> {
-        /// Upload blob and migrate to your desired contract.
-        /// It will upload your contract as well, if it's not uploaded already
+        /// Instantiate blob and migrate to your desired contract.
+        /// It will upload your contract, if it's not uploaded already
         ///
         /// Checksum of the code id on chain should match [Uploadable::wasm()] of the [CwBlob]
         /// For cw-multi-test this can be achieved only with custom Checksum Generator
