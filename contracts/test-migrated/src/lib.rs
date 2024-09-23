@@ -60,5 +60,5 @@ pub mod interface {
         }
     }
 
-    impl<Chain: CwEnv> cw_blob::interface::MigrationFromBlob<Chain> for MigratedBlob<Chain> {}
+    impl<Chain: CwEnv> cw_blob::interface::DeterministicInstantiation<Chain> for MigratedBlob<Chain> {}
 }

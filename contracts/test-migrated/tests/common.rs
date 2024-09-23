@@ -1,6 +1,6 @@
 use cosmrs::AccountId;
 use cosmwasm_std::{Binary, CanonicalAddr};
-use cw_blob::interface::{CwBlob, MigrationFromBlob};
+use cw_blob::interface::{CwBlob, DeterministicInstantiation};
 use cw_orch::{anyhow, prelude::*};
 use cw_test_migrated::interface::MigratedBlob;
 

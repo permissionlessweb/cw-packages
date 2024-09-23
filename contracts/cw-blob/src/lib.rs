@@ -9,7 +9,9 @@ pub fn instantiate(_: DepsMut, _: Env, _: MessageInfo, _: Empty) -> Result<Respo
 pub mod interface {
     use super::*;
 
-    use cosmwasm_std::{instantiate2_address, Binary, CanonicalAddr, Checksum};
+    use cosmwasm_std::{
+        instantiate2_address, Binary, CanonicalAddr, Checksum, Instantiate2AddressError,
+    };
     use cw_orch::{contract::Contract, prelude::*};
 
     // We don't want it to be manually instantiated/executed/etc, only uploaded. So not using cw_orch interface
@@ -60,7 +62,7 @@ pub mod interface {
         }
     }
 
-    pub trait MigrationFromBlob<Chain: CwEnv>:
+    pub trait DeterministicInstantiation<Chain: CwEnv>:
         ContractInstance<Chain> + CwOrchUpload<Chain> + MigratableContract
     {
         /// Instantiate blob and migrate to your desired contract.
@@ -95,13 +97,7 @@ pub mod interface {
 
             // Check incoming address of instantiated blob
             {
-                let account_id: cosmrs::AccountId = creator.as_str().parse().unwrap();
-                let canon_creator = CanonicalAddr::from(account_id.to_bytes());
-                let actual_addr = instantiate2_address(
-                    on_chain_checksum.as_slice(),
-                    &canon_creator,
-                    salt.as_slice(),
-                )?;
+                let actual_addr = self.deterministic_address(&salt)?;
                 if actual_addr != expected_addr {
                     return Err(CwOrchError::StdErr(
                         "Predicted blob address doesn't match to the expected".to_owned(),
@@ -132,6 +128,21 @@ pub mod interface {
             self.set_address(&blob_address);
             self.migrate(migrate_msg, contract_code_id)?;
             Ok(())
+        }
+
+        fn deterministic_address(
+            &self,
+            salt: &Binary,
+        ) -> Result<CanonicalAddr, Instantiate2AddressError> {
+            let creator = self.environment().sender_addr();
+            let account_id: cosmrs::AccountId = creator.as_str().parse().unwrap();
+            let canon_creator = CanonicalAddr::from(account_id.to_bytes());
+            let actual_addr = instantiate2_address(
+                CwBlob::<Chain>::checksum().as_slice(),
+                &canon_creator,
+                salt.as_slice(),
+            )?;
+            Ok(actual_addr)
         }
     }
 }
