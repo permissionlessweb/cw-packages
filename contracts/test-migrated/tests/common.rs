@@ -1,6 +1,6 @@
 use cosmrs::AccountId;
 use cosmwasm_std::{Binary, CanonicalAddr};
-use cw_blob::interface::CwBlob;
+use cw_blob::interface::{CwBlob, MigrationFromBlob};
 use cw_orch::{anyhow, prelude::*};
 use cw_test_migrated::interface::MigratedBlob;
 
@@ -24,14 +24,12 @@ pub fn test<T: CwEnv>(chain: T) -> anyhow::Result<()> {
     let expected_blob_canon_addr: CanonicalAddr =
         CanonicalAddr::from(expected_blob_account_id.to_bytes());
 
-    CwBlob::upload_and_migrate(
-        chain.clone(),
-        blob_code_id,
-        &first_migrated_blob,
+    first_migrated_blob.deterministic_instantiate(
         &cw_test_migrated::InstantiateMsg {
             key: b"foo".to_vec(),
             value: b"bar".to_vec(),
         },
+        blob_code_id,
         expected_blob_canon_addr,
         first_salt.clone(),
     )?;
@@ -45,14 +43,12 @@ pub fn test<T: CwEnv>(chain: T) -> anyhow::Result<()> {
     let expected_blob_canon_addr: CanonicalAddr =
         CanonicalAddr::from(expected_blob_account_id.to_bytes());
 
-    CwBlob::upload_and_migrate(
-        chain,
-        blob_code_id,
-        &second_migrated_blob,
+    second_migrated_blob.deterministic_instantiate(
         &cw_test_migrated::InstantiateMsg {
             key: b"bar".to_vec(),
             value: b"foo".to_vec(),
         },
+        blob_code_id,
         expected_blob_canon_addr,
         second_salt.clone(),
     )?;

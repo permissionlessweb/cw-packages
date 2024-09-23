@@ -36,8 +36,8 @@ cosmwasm-schema = { workspace = true }
 [target.'cfg(not(target_arch = "wasm32"))'.dependencies]
 cw-orch = { version = "0.25" }
 cw-orch-daemon = { version = "0.25.0" }
+cw-blob = { path = "../cw-blob" }
 
 [dev-dependencies]
-cw-blob = { path = "../cw-blob" }
 cosmrs = "0.20.0"
 cw-storage-plus = { workspace = true }

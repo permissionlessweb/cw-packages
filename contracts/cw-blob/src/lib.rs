@@ -58,37 +58,38 @@ pub mod interface {
                 .checksum()
                 .unwrap()
         }
+    }
 
+    pub trait MigrationFromBlob<Chain: CwEnv>:
+        ContractInstance<Chain> + CwOrchUpload<Chain> + MigratableContract
+    {
         /// Instantiate blob and migrate to your desired contract.
         /// It will upload your contract, if it's not uploaded already
         ///
         /// Checksum of the uploaded blob_code_id on chain should match [CwBlob::checksum()]
-        pub fn upload_and_migrate<M>(
-            chain: T,
+        fn deterministic_instantiate(
+            &self,
+            migrate_msg: &Self::MigrateMsg,
             // Ensures blob is uploaded and avoid couple of redundant checks
             blob_code_id: u64,
-            contract: &M,
-            migrate_msg: &M::MigrateMsg,
             expected_addr: CanonicalAddr,
             salt: Binary,
-        ) -> Result<(), CwOrchError>
-        where
-            M: ContractInstance<T> + CwOrchUpload<T> + MigratableContract,
-        {
+        ) -> Result<(), CwOrchError> {
+            let chain = self.environment();
             let on_chain_checksum = chain
                 .wasm_querier()
                 .code_id_hash(blob_code_id)
                 .map_err(Into::into)?;
             let creator = chain.sender_addr();
-            let blob_label = format!("{}_blob", contract.id());
+            let blob_label = format!("{}_blob", self.id());
 
             // Check stored checksum matches
             {
-                let expected_checksum = Self::checksum();
+                let expected_checksum = CwBlob::<Chain>::checksum();
                 if on_chain_checksum != expected_checksum {
                     return Err(CwOrchError::StdErr(format!(
-                    "Expected blob checksum: {expected_checksum}, stored under given code_id: {on_chain_checksum}"
-                )));
+                "Expected blob checksum: {expected_checksum}, stored under given code_id: {on_chain_checksum}"
+            )));
                 }
             }
 
@@ -126,10 +127,10 @@ pub mod interface {
                 panic!("Unexpected error: Instantiated blob address doesn't match to the expected");
             }
 
-            contract.upload_if_needed()?;
-            let contract_code_id = contract.code_id()?;
-            contract.set_address(&blob_address);
-            contract.migrate(migrate_msg, contract_code_id)?;
+            self.upload_if_needed()?;
+            let contract_code_id = self.code_id()?;
+            self.set_address(&blob_address);
+            self.migrate(migrate_msg, contract_code_id)?;
             Ok(())
         }
     }

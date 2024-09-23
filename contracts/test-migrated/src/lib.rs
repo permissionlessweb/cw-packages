@@ -59,4 +59,6 @@ pub mod interface {
             )
         }
     }
+
+    impl<Chain: CwEnv> cw_blob::interface::MigrationFromBlob<Chain> for MigratedBlob<Chain> {}
 }
