@@ -8,6 +8,7 @@ documentation.workspace = true
 repository.workspace = true
 license.workspace = true
 keywords.workspace = true
+publish = false
 description = "This contract used for testing migration from cw-blob with predictable address"
 
 [lib]
