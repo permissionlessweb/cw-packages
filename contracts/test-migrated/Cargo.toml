@@ -38,6 +38,7 @@ cosmwasm-schema = { workspace = true }
 cw-orch = { version = "0.25" }
 cw-orch-daemon = { version = "0.25.0" }
 cw-blob = { path = "../cw-blob" }
+cw-orch-clone-testing = { version = "0.7.1" }
 
 [dev-dependencies]
 cosmrs = "0.20.0"
