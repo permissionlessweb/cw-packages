@@ -1,5 +1,12 @@
 use cosmwasm_std::{entry_point, DepsMut, Empty, Env, MessageInfo, Never, Response};
 
+/// Checksum of the wasm
+// Unused, so optimized out of the wasm
+pub const CHECKSUM: [u8; 32] = [
+    89, 178, 71, 166, 117, 182, 203, 76, 79, 113, 13, 221, 231, 111, 158, 232, 2, 192, 224, 164,
+    210, 48, 131, 111, 30, 203, 245, 199, 163, 20, 125, 21,
+];
+
 #[entry_point]
 pub fn instantiate(_: DepsMut, _: Env, _: MessageInfo, _: Empty) -> Result<Response, Never> {
     Ok(Response::new())
@@ -36,9 +43,7 @@ pub mod interface {
 
     impl<T: CwEnv> Uploadable for CwBlob<T> {
         fn wasm(_chain: &ChainInfoOwned) -> WasmPath {
-            artifacts_dir_from_workspace!()
-                .find_wasm_path("cw_blob")
-                .unwrap()
+            wasm_path()
         }
 
         fn wrapper() -> Box<dyn MockContract<Empty, Empty>> {
@@ -48,18 +53,19 @@ pub mod interface {
                     super::instantiate,
                     |_, _, _: Empty| -> Result<Binary, Never> { unreachable!() },
                 )
-                .with_checksum(Self::checksum()),
+                .with_checksum(checksum()),
             )
         }
     }
 
-    impl<T: CwEnv> CwBlob<T> {
-        /// Checksum of the blob
-        pub fn checksum() -> Checksum {
-            <Self as Uploadable>::wasm(&ChainInfoOwned::default())
-                .checksum()
-                .unwrap()
-        }
+    pub fn checksum() -> Checksum {
+        Checksum::from(CHECKSUM)
+    }
+
+    pub(crate) fn wasm_path() -> WasmPath {
+        artifacts_dir_from_workspace!()
+            .find_wasm_path("cw_blob")
+            .unwrap()
     }
 
     pub trait DeterministicInstantiation<Chain: CwEnv>:
@@ -87,7 +93,7 @@ pub mod interface {
 
             // Check stored checksum matches
             {
-                let expected_checksum = CwBlob::<Chain>::checksum();
+                let expected_checksum = checksum();
                 if on_chain_checksum != expected_checksum {
                     return Err(CwOrchError::StdErr(format!(
                 "Expected blob checksum: {expected_checksum}, stored under given code_id: {on_chain_checksum}"
@@ -137,12 +143,23 @@ pub mod interface {
             let creator = self.environment().sender_addr();
             let account_id: cosmrs::AccountId = creator.as_str().parse().unwrap();
             let canon_creator = CanonicalAddr::from(account_id.to_bytes());
-            let actual_addr = instantiate2_address(
-                CwBlob::<Chain>::checksum().as_slice(),
-                &canon_creator,
-                salt.as_slice(),
-            )?;
+            let actual_addr =
+                instantiate2_address(checksum().as_slice(), &canon_creator, salt.as_slice())?;
             Ok(actual_addr)
         }
+    }
+}
+
+#[cfg(test)]
+mod test {
+    use interface::{checksum, wasm_path};
+
+    use super::*;
+
+    #[test]
+    fn test_checksum() {
+        let checksum = checksum();
+        let expected_checksum = wasm_path().checksum().unwrap();
+        assert_eq!(checksum, expected_checksum);
     }
 }
