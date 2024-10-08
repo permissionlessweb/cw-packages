@@ -1,4 +1,4 @@
-use cosmwasm_std::{entry_point, DepsMut, Empty, Env, MessageInfo, Never, Response};
+use cosmwasm_std::{DepsMut, Empty, Env, MessageInfo, Never, Response};
 
 /// Checksum of the wasm
 // Unused, so optimized out of the wasm
@@ -7,7 +7,7 @@ pub const CHECKSUM: [u8; 32] = [
     210, 48, 131, 111, 30, 203, 245, 199, 163, 20, 125, 21,
 ];
 
-#[entry_point]
+#[cfg_attr(not(feature = "library"), cosmwasm_std::entry_point)]
 pub fn instantiate(_: DepsMut, _: Env, _: MessageInfo, _: Empty) -> Result<Response, Never> {
     Ok(Response::new())
 }
