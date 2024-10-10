@@ -1,7 +1,7 @@
 use cosmwasm_std::{DepsMut, Empty, Env, MessageInfo, Never, Response};
 
 /// Checksum of the wasm
-// Unused, so optimized out of the wasm
+#[cfg(not(target_arch = "wasm32"))]
 pub const CHECKSUM: [u8; 32] = [
     89, 178, 71, 166, 117, 182, 203, 76, 79, 113, 13, 221, 231, 111, 158, 232, 2, 192, 224, 164,
     210, 48, 131, 111, 30, 203, 245, 199, 163, 20, 125, 21,
@@ -89,7 +89,7 @@ pub mod interface {
                 .code_id_hash(blob_code_id)
                 .map_err(Into::into)?;
             let creator = chain.sender_addr();
-            let blob_label = format!("{}_blob", self.id());
+            let label = self.id();
 
             // Check stored checksum matches
             {
@@ -115,7 +115,7 @@ pub mod interface {
                 .instantiate2(
                     blob_code_id,
                     &cosmwasm_std::Empty {},
-                    Some(&blob_label),
+                    Some(&label),
                     Some(&creator),
                     &[],
                     salt,

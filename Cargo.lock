@@ -1135,7 +1135,7 @@ dependencies = [
 
 [[package]]
 name = "cw-blob"
-version = "0.1.3"
+version = "0.1.4"
 dependencies = [
  "cosmrs 0.20.0",
  "cosmwasm-std",
