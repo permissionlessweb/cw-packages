@@ -1,1 +1,1 @@
-59b247a675b6cb4c4f710ddde76f9ee802c0e0a4d230836f1ecbf5c7a3147d15  cw_blob.wasm
+5f6bc456e638f95ddb6fc50c115212debac2b12a1907d079b2fe943def7d71d9  cw_blob.wasm
