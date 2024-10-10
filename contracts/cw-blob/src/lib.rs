@@ -1,7 +1,7 @@
 use cosmwasm_std::{DepsMut, Empty, Env, MessageInfo, Never, Response};
 
 /// Checksum of the wasm
-#[cfg(not(target_arch = "wasm32"))]
+// Unused, so optimized out of the wasm
 pub const CHECKSUM: [u8; 32] = [
     89, 178, 71, 166, 117, 182, 203, 76, 79, 113, 13, 221, 231, 111, 158, 232, 2, 192, 224, 164,
     210, 48, 131, 111, 30, 203, 245, 199, 163, 20, 125, 21,
