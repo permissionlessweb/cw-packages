@@ -18,7 +18,7 @@ keywords = ["cosmos", "cosmwasm", "framework"]
 
 
 [workspace.dependencies]
-cosmwasm-schema = "2.0.0"
-cw-storage-plus = "2.0.0"
-cosmwasm-std = "2.0.0"
-cw-address-like = "2.0.0"
+cosmwasm-schema = "3.0.0"
+cw-storage-plus = "3.0.0"
+cosmwasm-std = "3.0.0"
+cw-address-like = {version = "3.0.0", git  = "https://github.com/permissionlessweb/cw-plus-plus"}

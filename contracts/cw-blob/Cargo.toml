@@ -20,5 +20,5 @@ library = []
 cosmwasm-std = { workspace = true }
 
 [target.'cfg(not(target_arch = "wasm32"))'.dependencies]
-cw-orch = { version = "0.25" }
-cosmrs = "0.20.0"
+cw-orch = { version = "0.30",   git = "https://github.com/permissionlessweb/cw-orchestrator" }
+cosmrs  = { version = "0.23.0", git = "https://github.com/permissionlessweb/cosmos-rust" }
