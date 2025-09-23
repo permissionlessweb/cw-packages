@@ -24,6 +24,8 @@ pub fn test<T: CwEnv>(chain: T) -> anyhow::Result<()> {
     let expected_blob_canon_addr: CanonicalAddr =
         CanonicalAddr::from(expected_blob_account_id.to_bytes());
 
+    let creator = chain.sender_addr();
+
     first_migrated_blob.deterministic_instantiate(
         &cw_test_migrated::InstantiateMsg {
             key: b"foo".to_vec(),
@@ -31,6 +33,7 @@ pub fn test<T: CwEnv>(chain: T) -> anyhow::Result<()> {
         },
         blob_code_id,
         expected_blob_canon_addr,
+        Some(creator.clone()),
         first_salt.clone(),
     )?;
 
@@ -50,6 +53,7 @@ pub fn test<T: CwEnv>(chain: T) -> anyhow::Result<()> {
         },
         blob_code_id,
         expected_blob_canon_addr,
+        Some(creator.clone()),
         second_salt.clone(),
     )?;
 
@@ -58,6 +62,16 @@ pub fn test<T: CwEnv>(chain: T) -> anyhow::Result<()> {
 
     let res = second_migrated_blob.raw_query(b"bar".to_vec())?;
     assert_eq!(res, b"foo");
+
+    Ok(())
+}
+
+pub fn test_with_authz<T: CwEnv>(chain: T, granter: Addr, grantee: Addr) -> anyhow::Result<()> {
+    // upload with authz
+
+    // use the cw-blob migrate to instantiate contract
+
+    // ensure predictable address aligns with the correct address
 
     Ok(())
 }
