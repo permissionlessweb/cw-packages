@@ -81,6 +81,7 @@ pub mod interface {
             // Ensures blob is uploaded and avoid couple of redundant checks
             blob_code_id: u64,
             expected_addr: CanonicalAddr,
+            creator: Option<Addr>,
             salt: Binary,
         ) -> Result<(), CwOrchError> {
             let chain = self.environment();
@@ -88,7 +89,10 @@ pub mod interface {
                 .wasm_querier()
                 .code_id_hash(blob_code_id)
                 .map_err(Into::into)?;
-            let creator = chain.sender_addr();
+            let creator = match creator {
+                Some(c) => c,
+                None => chain.sender_addr(),
+            };
             let label = self.id();
 
             // Check stored checksum matches
@@ -103,7 +107,7 @@ pub mod interface {
 
             // Check incoming address of instantiated blob
             {
-                let actual_addr = self.deterministic_address(&salt)?;
+                let actual_addr = self.deterministic_address(&salt, &creator)?;
                 if actual_addr != expected_addr {
                     return Err(CwOrchError::StdErr(
                         "Predicted blob address doesn't match to the expected".to_owned(),
@@ -139,8 +143,8 @@ pub mod interface {
         fn deterministic_address(
             &self,
             salt: &Binary,
+            creator: &Addr,
         ) -> Result<CanonicalAddr, Instantiate2AddressError> {
-            let creator = self.environment().sender_addr();
             let account_id: cosmrs::AccountId = creator.as_str().parse().unwrap();
             let canon_creator = CanonicalAddr::from(account_id.to_bytes());
             let actual_addr =
