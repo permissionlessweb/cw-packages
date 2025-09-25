@@ -11,7 +11,7 @@ wasm:
   docker run --rm -v "$(pwd)":/code \
   --mount type=volume,source="$(basename "$(pwd)")_cache",target=/code/target \
   --mount type=volume,source=registry_cache,target=/usr/local/cargo/registry \
-  ${image}:0.16.0
+  ${image}:0.16.1
 
   # Move cw_blob artifacts
   cp artifacts/cw_blob.wasm contracts/cw-blob/artifacts/.

@@ -3,8 +3,8 @@ use cosmwasm_std::{DepsMut, Empty, Env, MessageInfo, Never, Response};
 /// Checksum of the wasm
 // Unused, so optimized out of the wasm
 pub const CHECKSUM: [u8; 32] = [
-    95, 107, 196, 86, 230, 56, 249, 93, 219, 111, 197, 12, 17, 82, 18, 222, 186, 194, 177, 42, 25,
-    7, 208, 121, 178, 254, 148, 61, 239, 125, 113, 217,
+    169, 7, 82, 85, 146, 16, 38, 188, 196, 154, 104, 18, 242, 53, 243, 240, 198, 245, 28, 245, 32,
+    125, 181, 86, 218, 236, 239, 172, 116, 8, 10, 133,
 ];
 
 #[cfg_attr(not(feature = "library"), cosmwasm_std::entry_point)]

@@ -32,3 +32,4 @@ cw-orch-clone-testing = { version = "0.7.1" }
 [dev-dependencies]
 cosmrs = { version = "0.20.0", features = ["cosmwasm"] } 
 cw-storage-plus = { workspace = true }
+hex = "0.4.3" 
