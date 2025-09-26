@@ -62,6 +62,14 @@ pub mod interface {
         Checksum::from(CHECKSUM)
     }
 
+    // pub fn humanize(canonical: &CanonicalAddr, prefix: &'static String) -> StdResult<String> {
+    //     Ok(mock_dependencies()
+    //         .api
+    //         .with_prefix(prefix)
+    //         .addr_humanize(canonical)?
+    //         .to_string())
+    // }
+
     pub(crate) fn wasm_path() -> WasmPath {
         artifacts_dir_from_workspace!()
             .find_wasm_path("cw_blob")
@@ -89,9 +97,15 @@ pub mod interface {
                 .wasm_querier()
                 .code_id_hash(blob_code_id)
                 .map_err(Into::into)?;
-            let creator = chain.sender_addr();
+            let creator = match &admin {
+                Some(c) => c.clone(),
+                None => chain.sender_addr(),
+            };
 
-            let migrate_admin = admin.unwrap_or(creator.clone());
+            println!(
+                "deterministic_instantiate: creator_addr: {}",
+                creator.to_string()
+            );
             let label = self.id();
 
             // Check stored checksum matches
@@ -119,7 +133,7 @@ pub mod interface {
                     blob_code_id,
                     &cosmwasm_std::Empty {},
                     Some(&label),
-                    Some(&migrate_admin),
+                    Some(&creator),
                     &[],
                     salt,
                 )
