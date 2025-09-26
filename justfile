@@ -1,3 +1,4 @@
+#!/bin/bash
 wasm:  
   #!/usr/bin/env bash
 

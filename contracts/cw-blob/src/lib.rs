@@ -81,7 +81,7 @@ pub mod interface {
             // Ensures blob is uploaded and avoid couple of redundant checks
             blob_code_id: u64,
             expected_addr: CanonicalAddr,
-            creator: Option<Addr>,
+            admin: Option<Addr>,
             salt: Binary,
         ) -> Result<(), CwOrchError> {
             let chain = self.environment();
@@ -89,10 +89,9 @@ pub mod interface {
                 .wasm_querier()
                 .code_id_hash(blob_code_id)
                 .map_err(Into::into)?;
-            let creator = match creator {
-                Some(c) => c,
-                None => chain.sender_addr(),
-            };
+            let creator = chain.sender_addr();
+
+            let migrate_admin = admin.unwrap_or(creator.clone());
             let label = self.id();
 
             // Check stored checksum matches
@@ -120,12 +119,14 @@ pub mod interface {
                     blob_code_id,
                     &cosmwasm_std::Empty {},
                     Some(&label),
-                    Some(&creator),
+                    Some(&migrate_admin),
                     &[],
                     salt,
                 )
                 .map_err(Into::into)?;
             let blob_address = response.instantiated_contract_address()?;
+            println!("instantiate2 response: {:#?}", response.events());
+            println!("blob_address: {:#?}", blob_address);
             let blob_cosmrs_account_id: cosmrs::AccountId = blob_address.as_str().parse().unwrap();
             if blob_cosmrs_account_id.to_bytes() != expected_addr.as_slice() {
                 // This shouldn't ever happen because we checked instantiate2 address before actually instantiating
