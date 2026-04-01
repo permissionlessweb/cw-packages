@@ -12,6 +12,7 @@ resolver = "2"
 [dependencies]
 cosmwasm-schema = { workspace = true }
 cosmwasm-std = { workspace = true }
+sha2 = "0.10.9"
 
 [dev-dependencies]
 cw-storage-plus = { workspace = true }

@@ -1,4 +1,4 @@
-use cosmwasm_std::{entry_point, DepsMut, Empty, Env, MessageInfo, Never, Response};
+use cosmwasm_std::{DepsMut, Empty, Env, MessageInfo, MigrateInfo, Never, Response, entry_point};
 
 #[cosmwasm_schema::cw_serde]
 pub struct InstantiateMsg {
@@ -18,7 +18,12 @@ pub fn instantiate(
 }
 
 #[entry_point]
-pub fn migrate(deps: DepsMut, env: Env, migrate_msg: InstantiateMsg) -> Result<Response, Never> {
+pub fn migrate(
+    deps: DepsMut,
+    env: Env,
+    migrate_msg: InstantiateMsg,
+    _info: MigrateInfo,
+) -> Result<Response, Never> {
     let contract_info = deps
         .querier
         .query_wasm_contract_info(&env.contract.address)

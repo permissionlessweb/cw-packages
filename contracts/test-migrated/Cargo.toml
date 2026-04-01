@@ -24,11 +24,11 @@ cosmwasm-std = { workspace = true }
 cosmwasm-schema = { workspace = true }
 
 [target.'cfg(not(target_arch = "wasm32"))'.dependencies]
-cw-orch = { git = "https://github.com/permissionlessweb/cw-orchestrator", branch = "feat/wasm-path" }
-cw-orch-daemon  = { git = "https://github.com/permissionlessweb/cw-orchestrator", branch = "feat/wasm-path" }
+cw-orch = { path = "../../../cw-orchestrator/cw-orch" }
+cw-orch-daemon  = { path = "../../../cw-orchestrator/cw-orch-daemon" }
 cw-blob = { path = "../cw-blob" }
-cw-orch-clone-testing = { version = "0.7.1" }
+cw-orch-clone-testing = { path = "../../../cw-orchestrator/packages/clone-testing" }
 
 [dev-dependencies]
-cosmrs = "0.20.0"
+cosmrs  = { version = "0.23.0", git = "https://github.com/permissionlessweb/cosmos-rust" }
 cw-storage-plus = { workspace = true }
