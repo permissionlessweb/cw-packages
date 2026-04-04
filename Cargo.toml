@@ -21,5 +21,5 @@ keywords = ["cosmos", "cosmwasm", "framework"]
 cosmwasm-schema = { git = "https://github.com/permissionlessweb/cosmwasm", branch = "mvp" }
 cw-storage-plus = { git = "https://github.com/permissionlessweb/cw-storage-plus", branch = "mvp" }
 cosmwasm-std = { git = "https://github.com/permissionlessweb/cosmwasm", branch = "mvp" }
-cw-address-like = { git = "https://github.com/permissionlessweb/cw-plus-plus", branch = "main" }
+cw-address-like = { git = "https://github.com/permissionlessweb/cw-plus-plus", branch = "feat/mvp" }
 
