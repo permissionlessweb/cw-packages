@@ -25,9 +25,9 @@ cosmwasm-schema = { workspace = true }
 
 [target.'cfg(not(target_arch = "wasm32"))'.dependencies]
 cw-orch = { git = "https://github.com/permissionlessweb/cw-orchestrator", branch = "cw3" }
-cw-orch-daemon  = { path = "../../../cw-orchestrator/cw-orch-daemon" }
+cw-orch-daemon  = { git = "https://github.com/permissionlessweb/cw-orchestrator", branch = "cw3" }
 cw-blob = { git = "https://github.com/permissionlessweb/cw-packages", branch = "feat/cw3" }
-cw-orch-clone-testing = { path = "../../../cw-orchestrator/packages/clone-testing" }
+cw-orch-clone-testing = { git = "https://github.com/permissionlessweb/cw-orchestrator", branch = "cw3" }
 
 [dev-dependencies]
 cosmrs = { git = "https://github.com/permissionlessweb/cosmos-rust", branch = "main" }
