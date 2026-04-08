@@ -18,8 +18,8 @@ keywords = ["cosmos", "cosmwasm", "framework"]
 
 
 [workspace.dependencies]
-cosmwasm-schema = { path = "../ZK/cw/zk-cosmwasm/packages/schema" }
-cw-storage-plus = { path = "../ZK/cw/zk-storage-plus" }
-cosmwasm-std = { path = "../ZK/cw/zk-cosmwasm/packages/std" }
-cw-address-like = { path = "../ZK/cw/zk-plus-plus/packages/address-like" }
+cosmwasm-schema = { git = "https://github.com/permissionlessweb/cosmwasm", branch = "zk-mvp" }
+cw-storage-plus = { git = "https://github.com/permissionlessweb/cw-storage-plus", branch = "zk-mvp" }
+cosmwasm-std = { git = "https://github.com/permissionlessweb/cosmwasm", branch = "zk-mvp" }
+cw-address-like = { git = "https://github.com/permissionlessweb/cw-plus-plus", branch = "zk-mvp" }
 
