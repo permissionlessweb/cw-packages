@@ -5,13 +5,13 @@ version = 4
 [[package]]
 name = "abstract-cw-multi-test"
 version = "3.0.0-rc"
-source = "git+https://github.com/permissionlessweb/cw-multi-test-fork?branch=bump%2Fcw3%2Fofficial-ibc-fork#b8f72f4f89cc46a2aff09d785e1f7a0e781fce45"
+source = "git+https://github.com/permissionlessweb/cw-multi-test-fork?branch=bump%2Fcw3%2Fofficial-ibc-fork#74c12ab685231ca5c9429dbc92dd5e7870d9f921"
 dependencies = [
  "bech32",
- "cosmwasm-schema",
- "cosmwasm-std",
- "cw-storage-plus",
- "cw-utils",
+ "cosmwasm-schema 3.0.3-dev (git+https://github.com/permissionlessweb/cosmwasm?branch=mvp)",
+ "cosmwasm-std 3.0.3-dev (git+https://github.com/permissionlessweb/cosmwasm?branch=mvp)",
+ "cw-storage-plus 3.0.1 (git+https://github.com/permissionlessweb/cw-storage-plus?branch=mvp)",
+ "cw-utils 3.0.0 (git+https://github.com/permissionlessweb/cw-minus?branch=main)",
  "cw20-ics20",
  "hex",
  "itertools 0.14.0",
@@ -713,18 +713,18 @@ dependencies = [
 [[package]]
 name = "clone-cw-multi-test"
 version = "3.0.1"
-source = "git+https://github.com/permissionlessweb/cw-multi-test-fork?branch=cw3%2Fadapt_for_local_execution#e4e74c316c33725bc4b1158673598989745a727f"
+source = "git+https://github.com/permissionlessweb/cw-multi-test-fork?branch=cw3%2Fadapt_for_local_execution#ec6ab334025ee20232ab21420e1c519e11082959"
 dependencies = [
  "bech32",
  "cargo_metadata",
- "cosmos-sdk-proto",
- "cosmrs",
- "cosmwasm-schema",
- "cosmwasm-std",
+ "cosmos-sdk-proto 0.28.0 (git+https://github.com/permissionlessweb/cosmos-rust?branch=main)",
+ "cosmrs 0.23.0 (git+https://github.com/permissionlessweb/cosmos-rust?branch=main)",
+ "cosmwasm-schema 3.0.3-dev (git+https://github.com/permissionlessweb/cosmwasm?branch=mvp)",
+ "cosmwasm-std 3.0.3-dev (git+https://github.com/permissionlessweb/cosmwasm?branch=mvp)",
  "cosmwasm-vm",
- "cw-orch",
- "cw-storage-plus",
- "cw-utils",
+ "cw-orch 0.30.0 (git+https://github.com/permissionlessweb/cw-orchestrator?branch=cw3)",
+ "cw-storage-plus 3.0.1 (git+https://github.com/permissionlessweb/cw-storage-plus?branch=mvp)",
+ "cw-utils 3.0.0 (git+https://github.com/permissionlessweb/cw-minus?branch=main)",
  "cw20-ics20",
  "derivative",
  "file-lock",
@@ -827,12 +827,24 @@ dependencies = [
 [[package]]
 name = "cosmos-sdk-proto"
 version = "0.28.0"
-source = "git+https://github.com/permissionlessweb/cosmos-rust?branch=main#2017200e4180dec8ed19fdc0cd633279d6b3c6f9"
 dependencies = [
  "bytes",
  "http-body-util",
  "prost",
- "tendermint-proto",
+ "tendermint-proto 0.40.4",
+ "tonic",
+ "tonic-prost",
+]
+
+[[package]]
+name = "cosmos-sdk-proto"
+version = "0.28.0"
+source = "git+https://github.com/permissionlessweb/cosmos-rust?branch=main#51a9e50dda277801d3abd7ff0d332d37fbc25a91"
+dependencies = [
+ "bytes",
+ "http-body-util",
+ "prost",
+ "tendermint-proto 0.40.4 (git+https://github.com/permissionlessweb/tendermint-rs?branch=main)",
  "tonic",
  "tonic-prost",
 ]
@@ -840,10 +852,9 @@ dependencies = [
 [[package]]
 name = "cosmrs"
 version = "0.23.0"
-source = "git+https://github.com/permissionlessweb/cosmos-rust?branch=main#2017200e4180dec8ed19fdc0cd633279d6b3c6f9"
 dependencies = [
  "bip32",
- "cosmos-sdk-proto",
+ "cosmos-sdk-proto 0.28.0",
  "ecdsa",
  "eyre",
  "k256",
@@ -852,7 +863,26 @@ dependencies = [
  "serde_json",
  "signature",
  "subtle-encoding",
- "tendermint",
+ "tendermint 0.40.4",
+ "thiserror 1.0.69",
+]
+
+[[package]]
+name = "cosmrs"
+version = "0.23.0"
+source = "git+https://github.com/permissionlessweb/cosmos-rust?branch=main#51a9e50dda277801d3abd7ff0d332d37fbc25a91"
+dependencies = [
+ "bip32",
+ "cosmos-sdk-proto 0.28.0 (git+https://github.com/permissionlessweb/cosmos-rust?branch=main)",
+ "ecdsa",
+ "eyre",
+ "k256",
+ "rand_core 0.6.4",
+ "serde",
+ "serde_json",
+ "signature",
+ "subtle-encoding",
+ "tendermint 0.40.4 (git+https://github.com/permissionlessweb/tendermint-rs?branch=main)",
  "tendermint-rpc",
  "thiserror 1.0.69",
  "tokio",
@@ -861,7 +891,34 @@ dependencies = [
 [[package]]
 name = "cosmwasm-core"
 version = "3.0.3-dev"
+
+[[package]]
+name = "cosmwasm-core"
+version = "3.0.3-dev"
 source = "git+https://github.com/permissionlessweb/cosmwasm?branch=mvp#d5586deb95247416a6eaf312c8aa3e283e1d15ca"
+
+[[package]]
+name = "cosmwasm-crypto"
+version = "3.0.3-dev"
+dependencies = [
+ "ark-bls12-381",
+ "ark-ec",
+ "ark-ff",
+ "ark-serialize",
+ "cosmwasm-core 3.0.3-dev",
+ "curve25519-dalek",
+ "digest 0.10.7",
+ "ecdsa",
+ "ed25519-zebra",
+ "k256",
+ "num-bigint",
+ "num-traits",
+ "p256",
+ "rand_core 0.6.4",
+ "rayon",
+ "sha2 0.10.9",
+ "thiserror 1.0.69",
+]
 
 [[package]]
 name = "cosmwasm-crypto"
@@ -872,7 +929,7 @@ dependencies = [
  "ark-ec",
  "ark-ff",
  "ark-serialize",
- "cosmwasm-core",
+ "cosmwasm-core 3.0.3-dev (git+https://github.com/permissionlessweb/cosmwasm?branch=mvp)",
  "curve25519-dalek",
  "digest 0.10.7",
  "ecdsa",
@@ -890,6 +947,15 @@ dependencies = [
 [[package]]
 name = "cosmwasm-derive"
 version = "3.0.3-dev"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn 2.0.117",
+]
+
+[[package]]
+name = "cosmwasm-derive"
+version = "3.0.3-dev"
 source = "git+https://github.com/permissionlessweb/cosmwasm?branch=mvp#d5586deb95247416a6eaf312c8aa3e283e1d15ca"
 dependencies = [
  "proc-macro2",
@@ -900,14 +966,35 @@ dependencies = [
 [[package]]
 name = "cosmwasm-schema"
 version = "3.0.3-dev"
-source = "git+https://github.com/permissionlessweb/cosmwasm?branch=mvp#d5586deb95247416a6eaf312c8aa3e283e1d15ca"
 dependencies = [
- "cosmwasm-schema-derive",
- "cw-schema",
+ "cosmwasm-schema-derive 3.0.3-dev",
+ "cw-schema 3.0.3-dev",
  "schemars 0.8.22",
  "serde",
  "serde_json",
  "thiserror 1.0.69",
+]
+
+[[package]]
+name = "cosmwasm-schema"
+version = "3.0.3-dev"
+source = "git+https://github.com/permissionlessweb/cosmwasm?branch=mvp#d5586deb95247416a6eaf312c8aa3e283e1d15ca"
+dependencies = [
+ "cosmwasm-schema-derive 3.0.3-dev (git+https://github.com/permissionlessweb/cosmwasm?branch=mvp)",
+ "cw-schema 3.0.3-dev (git+https://github.com/permissionlessweb/cosmwasm?branch=mvp)",
+ "schemars 0.8.22",
+ "serde",
+ "serde_json",
+ "thiserror 1.0.69",
+]
+
+[[package]]
+name = "cosmwasm-schema-derive"
+version = "3.0.3-dev"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn 2.0.117",
 ]
 
 [[package]]
@@ -923,15 +1010,38 @@ dependencies = [
 [[package]]
 name = "cosmwasm-std"
 version = "3.0.3-dev"
+dependencies = [
+ "base64 0.22.1",
+ "bech32",
+ "bnum",
+ "cosmwasm-core 3.0.3-dev",
+ "cosmwasm-crypto 3.0.3-dev",
+ "cosmwasm-derive 3.0.3-dev",
+ "cw-schema 3.0.3-dev",
+ "derive_more 2.1.1",
+ "hex",
+ "rand_core 0.6.4",
+ "rmp-serde",
+ "schemars 0.8.22",
+ "serde",
+ "serde_json",
+ "sha2 0.10.9",
+ "static_assertions",
+ "thiserror 1.0.69",
+]
+
+[[package]]
+name = "cosmwasm-std"
+version = "3.0.3-dev"
 source = "git+https://github.com/permissionlessweb/cosmwasm?branch=mvp#d5586deb95247416a6eaf312c8aa3e283e1d15ca"
 dependencies = [
  "base64 0.22.1",
  "bech32",
  "bnum",
- "cosmwasm-core",
- "cosmwasm-crypto",
- "cosmwasm-derive",
- "cw-schema",
+ "cosmwasm-core 3.0.3-dev (git+https://github.com/permissionlessweb/cosmwasm?branch=mvp)",
+ "cosmwasm-crypto 3.0.3-dev (git+https://github.com/permissionlessweb/cosmwasm?branch=mvp)",
+ "cosmwasm-derive 3.0.3-dev (git+https://github.com/permissionlessweb/cosmwasm?branch=mvp)",
+ "cw-schema 3.0.3-dev (git+https://github.com/permissionlessweb/cosmwasm?branch=mvp)",
  "derive_more 2.1.1",
  "hex",
  "rand_core 0.6.4",
@@ -952,9 +1062,9 @@ dependencies = [
  "bech32",
  "blake2",
  "clru",
- "cosmwasm-core",
- "cosmwasm-crypto",
- "cosmwasm-std",
+ "cosmwasm-core 3.0.3-dev (git+https://github.com/permissionlessweb/cosmwasm?branch=mvp)",
+ "cosmwasm-crypto 3.0.3-dev (git+https://github.com/permissionlessweb/cosmwasm?branch=mvp)",
+ "cosmwasm-std 3.0.3-dev (git+https://github.com/permissionlessweb/cosmwasm?branch=mvp)",
  "cosmwasm-vm-derive",
  "crc32fast",
  "derive_more 2.1.1",
@@ -1200,9 +1310,9 @@ dependencies = [
 name = "cw-blob"
 version = "0.2.0"
 dependencies = [
- "cosmrs",
- "cosmwasm-std",
- "cw-orch",
+ "cosmrs 0.23.0",
+ "cosmwasm-std 3.0.3-dev",
+ "cw-orch 0.30.0",
 ]
 
 [[package]]
@@ -1210,51 +1320,86 @@ name = "cw-blob"
 version = "0.2.0"
 source = "git+https://github.com/permissionlessweb/cw-packages?branch=feat%2Fcw3#67822874db4327747f89bf3c5541564866e6aded"
 dependencies = [
- "cosmrs",
- "cosmwasm-std",
- "cw-orch",
+ "cosmrs 0.23.0 (git+https://github.com/permissionlessweb/cosmos-rust?branch=main)",
+ "cosmwasm-std 3.0.3-dev (git+https://github.com/permissionlessweb/cosmwasm?branch=mvp)",
+ "cw-orch 0.30.0 (git+https://github.com/permissionlessweb/cw-orchestrator?branch=cw3)",
 ]
 
 [[package]]
 name = "cw-clearable"
 version = "0.2.0"
 dependencies = [
- "cosmwasm-schema",
- "cosmwasm-std",
- "cw-storage-plus",
+ "cosmwasm-schema 3.0.3-dev",
+ "cosmwasm-std 3.0.3-dev",
+ "cw-storage-plus 3.0.1",
  "sha2 0.10.9",
 ]
 
 [[package]]
 name = "cw-controllers"
 version = "3.0.0"
-source = "git+https://github.com/permissionlessweb/cw-minus?branch=main#47c2b4c18f6d9b7e1b607dc21ee29d7756dc6f06"
+source = "git+https://github.com/permissionlessweb/cw-minus?branch=main#54e7f82f24278a41f29e8f10aa5069ac775e9b99"
 dependencies = [
- "cosmwasm-schema",
- "cosmwasm-std",
- "cw-storage-plus",
- "cw-utils",
+ "cosmwasm-schema 3.0.3-dev (git+https://github.com/permissionlessweb/cosmwasm?branch=mvp)",
+ "cosmwasm-std 3.0.3-dev (git+https://github.com/permissionlessweb/cosmwasm?branch=mvp)",
+ "cw-storage-plus 3.0.1 (git+https://github.com/permissionlessweb/cw-storage-plus?branch=mvp)",
+ "cw-utils 3.0.0 (git+https://github.com/permissionlessweb/cw-minus?branch=main)",
  "schemars 0.8.22",
  "serde",
  "thiserror 2.0.18",
 ]
 
 [[package]]
+name = "cw-multi-test"
+version = "3.0.1"
+dependencies = [
+ "bech32",
+ "cosmwasm-schema 3.0.3-dev (git+https://github.com/permissionlessweb/cosmwasm?branch=mvp)",
+ "cosmwasm-std 3.0.3-dev (git+https://github.com/permissionlessweb/cosmwasm?branch=mvp)",
+ "cw-storage-plus 3.0.1 (git+https://github.com/permissionlessweb/cw-storage-plus?branch=mvp)",
+ "cw-utils 3.0.0 (git+https://github.com/permissionlessweb/cw-minus?branch=mvp)",
+ "itertools 0.14.0",
+ "prost",
+ "schemars 0.8.22",
+ "serde",
+ "sha2 0.10.9",
+]
+
+[[package]]
 name = "cw-orch"
 version = "0.30.0"
-source = "git+https://github.com/permissionlessweb/cw-orchestrator?branch=cw3#c613d61d1148239385b14f59d0c2c50468e5d837"
 dependencies = [
  "anyhow",
- "cosmrs",
- "cosmwasm-std",
- "cw-orch-contract-derive",
- "cw-orch-core",
+ "cosmwasm-std 3.0.3-dev",
+ "cw-orch-contract-derive 0.21.1",
+ "cw-orch-core 2.1.4",
+ "cw-orch-fns-derive 0.23.1",
+ "cw-orch-mock 0.24.4",
+ "cw-orch-traits 0.25.0",
+ "cw-utils 3.0.0",
+ "hex",
+ "log",
+ "schemars 0.8.22",
+ "serde",
+ "thiserror 1.0.69",
+]
+
+[[package]]
+name = "cw-orch"
+version = "0.30.0"
+source = "git+https://github.com/permissionlessweb/cw-orchestrator?branch=cw3#ec4d693aad80ee70ddbd77c3b78c9807bedb6be0"
+dependencies = [
+ "anyhow",
+ "cosmrs 0.23.0 (git+https://github.com/permissionlessweb/cosmos-rust?branch=main)",
+ "cosmwasm-std 3.0.3-dev (git+https://github.com/permissionlessweb/cosmwasm?branch=mvp)",
+ "cw-orch-contract-derive 0.21.1 (git+https://github.com/permissionlessweb/cw-orchestrator?branch=cw3)",
+ "cw-orch-core 2.1.4 (git+https://github.com/permissionlessweb/cw-orchestrator?branch=cw3)",
  "cw-orch-daemon",
- "cw-orch-fns-derive",
- "cw-orch-mock",
+ "cw-orch-fns-derive 0.23.1 (git+https://github.com/permissionlessweb/cw-orchestrator?branch=cw3)",
+ "cw-orch-mock 0.24.4 (git+https://github.com/permissionlessweb/cw-orchestrator?branch=cw3)",
  "cw-orch-networks",
- "cw-orch-traits",
- "cw-utils",
+ "cw-orch-traits 0.25.0 (git+https://github.com/permissionlessweb/cw-orchestrator?branch=cw3)",
+ "cw-utils 3.0.0 (git+https://github.com/permissionlessweb/cw-minus?branch=main)",
  "hex",
  "log",
  "schemars 0.8.22",
@@ -1266,15 +1411,15 @@ dependencies = [
 [[package]]
 name = "cw-orch-clone-testing"
 version = "0.9.2"
-source = "git+https://github.com/permissionlessweb/cw-orchestrator?branch=cw3#c613d61d1148239385b14f59d0c2c50468e5d837"
+source = "git+https://github.com/permissionlessweb/cw-orchestrator?branch=cw3#ec4d693aad80ee70ddbd77c3b78c9807bedb6be0"
 dependencies = [
  "anyhow",
  "clone-cw-multi-test",
- "cosmwasm-std",
- "cw-orch-core",
+ "cosmwasm-std 3.0.3-dev (git+https://github.com/permissionlessweb/cosmwasm?branch=mvp)",
+ "cw-orch-core 2.1.4 (git+https://github.com/permissionlessweb/cw-orchestrator?branch=cw3)",
  "cw-orch-daemon",
- "cw-orch-mock",
- "cw-utils",
+ "cw-orch-mock 0.24.4 (git+https://github.com/permissionlessweb/cw-orchestrator?branch=cw3)",
+ "cw-utils 3.0.0 (git+https://github.com/permissionlessweb/cw-minus?branch=main)",
  "itertools 0.12.1",
  "log",
  "serde",
@@ -1286,7 +1431,16 @@ dependencies = [
 [[package]]
 name = "cw-orch-contract-derive"
 version = "0.21.1"
-source = "git+https://github.com/permissionlessweb/cw-orchestrator?branch=cw3#c613d61d1148239385b14f59d0c2c50468e5d837"
+dependencies = [
+ "convert_case",
+ "quote",
+ "syn 2.0.117",
+]
+
+[[package]]
+name = "cw-orch-contract-derive"
+version = "0.21.1"
+source = "git+https://github.com/permissionlessweb/cw-orchestrator?branch=cw3#ec4d693aad80ee70ddbd77c3b78c9807bedb6be0"
 dependencies = [
  "convert_case",
  "quote",
@@ -1296,14 +1450,32 @@ dependencies = [
 [[package]]
 name = "cw-orch-core"
 version = "2.1.4"
-source = "git+https://github.com/permissionlessweb/cw-orchestrator?branch=cw3#c613d61d1148239385b14f59d0c2c50468e5d837"
+dependencies = [
+ "anyhow",
+ "cosmos-sdk-proto 0.28.0",
+ "cosmwasm-std 3.0.3-dev",
+ "cw-multi-test",
+ "cw-storage-plus 3.0.1",
+ "cw-utils 3.0.0",
+ "dirs",
+ "log",
+ "serde",
+ "serde_json",
+ "sha2 0.10.9",
+ "thiserror 1.0.69",
+]
+
+[[package]]
+name = "cw-orch-core"
+version = "2.1.4"
+source = "git+https://github.com/permissionlessweb/cw-orchestrator?branch=cw3#ec4d693aad80ee70ddbd77c3b78c9807bedb6be0"
 dependencies = [
  "abstract-cw-multi-test",
  "anyhow",
- "cosmos-sdk-proto",
- "cosmwasm-std",
- "cw-storage-plus",
- "cw-utils",
+ "cosmos-sdk-proto 0.28.0 (git+https://github.com/permissionlessweb/cosmos-rust?branch=main)",
+ "cosmwasm-std 3.0.3-dev (git+https://github.com/permissionlessweb/cosmwasm?branch=mvp)",
+ "cw-storage-plus 3.0.1 (git+https://github.com/permissionlessweb/cw-storage-plus?branch=mvp)",
+ "cw-utils 3.0.0 (git+https://github.com/permissionlessweb/cw-minus?branch=main)",
  "dirs",
  "log",
  "serde",
@@ -1315,7 +1487,7 @@ dependencies = [
 [[package]]
 name = "cw-orch-daemon"
 version = "0.29.0"
-source = "git+https://github.com/permissionlessweb/cw-orchestrator?branch=cw3#c613d61d1148239385b14f59d0c2c50468e5d837"
+source = "git+https://github.com/permissionlessweb/cw-orchestrator?branch=cw3#ec4d693aad80ee70ddbd77c3b78c9807bedb6be0"
 dependencies = [
  "anyhow",
  "async-recursion",
@@ -1325,11 +1497,11 @@ dependencies = [
  "bip39",
  "bitcoin",
  "chrono",
- "cosmrs",
- "cosmwasm-std",
- "cw-orch-core",
+ "cosmrs 0.23.0 (git+https://github.com/permissionlessweb/cosmos-rust?branch=main)",
+ "cosmwasm-std 3.0.3-dev (git+https://github.com/permissionlessweb/cosmwasm?branch=mvp)",
+ "cw-orch-core 2.1.4 (git+https://github.com/permissionlessweb/cw-orchestrator?branch=cw3)",
  "cw-orch-networks",
- "cw-orch-traits",
+ "cw-orch-traits 0.25.0 (git+https://github.com/permissionlessweb/cw-orchestrator?branch=cw3)",
  "dirs",
  "ed25519-dalek",
  "eyre",
@@ -1362,7 +1534,17 @@ dependencies = [
 [[package]]
 name = "cw-orch-fns-derive"
 version = "0.23.1"
-source = "git+https://github.com/permissionlessweb/cw-orchestrator?branch=cw3#c613d61d1148239385b14f59d0c2c50468e5d837"
+dependencies = [
+ "convert_case",
+ "proc-macro2",
+ "quote",
+ "syn 2.0.117",
+]
+
+[[package]]
+name = "cw-orch-fns-derive"
+version = "0.23.1"
+source = "git+https://github.com/permissionlessweb/cw-orchestrator?branch=cw3#ec4d693aad80ee70ddbd77c3b78c9807bedb6be0"
 dependencies = [
  "convert_case",
  "proc-macro2",
@@ -1373,13 +1555,27 @@ dependencies = [
 [[package]]
 name = "cw-orch-mock"
 version = "0.24.4"
-source = "git+https://github.com/permissionlessweb/cw-orchestrator?branch=cw3#c613d61d1148239385b14f59d0c2c50468e5d837"
+dependencies = [
+ "cosmos-sdk-proto 0.28.0",
+ "cosmwasm-std 3.0.3-dev",
+ "cw-multi-test",
+ "cw-orch-core 2.1.4",
+ "cw-utils 3.0.0",
+ "log",
+ "serde",
+ "sha2 0.10.9",
+]
+
+[[package]]
+name = "cw-orch-mock"
+version = "0.24.4"
+source = "git+https://github.com/permissionlessweb/cw-orchestrator?branch=cw3#ec4d693aad80ee70ddbd77c3b78c9807bedb6be0"
 dependencies = [
  "abstract-cw-multi-test",
- "cosmos-sdk-proto",
- "cosmwasm-std",
- "cw-orch-core",
- "cw-utils",
+ "cosmos-sdk-proto 0.28.0 (git+https://github.com/permissionlessweb/cosmos-rust?branch=main)",
+ "cosmwasm-std 3.0.3-dev (git+https://github.com/permissionlessweb/cosmwasm?branch=mvp)",
+ "cw-orch-core 2.1.4 (git+https://github.com/permissionlessweb/cw-orchestrator?branch=cw3)",
+ "cw-utils 3.0.0 (git+https://github.com/permissionlessweb/cw-minus?branch=main)",
  "log",
  "serde",
  "sha2 0.10.9",
@@ -1388,19 +1584,40 @@ dependencies = [
 [[package]]
 name = "cw-orch-networks"
 version = "0.24.10"
-source = "git+https://github.com/permissionlessweb/cw-orchestrator?branch=cw3#c613d61d1148239385b14f59d0c2c50468e5d837"
+source = "git+https://github.com/permissionlessweb/cw-orchestrator?branch=cw3#ec4d693aad80ee70ddbd77c3b78c9807bedb6be0"
 dependencies = [
- "cw-orch-core",
+ "cw-orch-core 2.1.4 (git+https://github.com/permissionlessweb/cw-orchestrator?branch=cw3)",
  "serde",
 ]
 
 [[package]]
 name = "cw-orch-traits"
 version = "0.25.0"
-source = "git+https://github.com/permissionlessweb/cw-orchestrator?branch=cw3#c613d61d1148239385b14f59d0c2c50468e5d837"
 dependencies = [
- "cw-orch-core",
+ "cw-orch-core 2.1.4",
  "prost-types",
+]
+
+[[package]]
+name = "cw-orch-traits"
+version = "0.25.0"
+source = "git+https://github.com/permissionlessweb/cw-orchestrator?branch=cw3#ec4d693aad80ee70ddbd77c3b78c9807bedb6be0"
+dependencies = [
+ "cw-orch-core 2.1.4 (git+https://github.com/permissionlessweb/cw-orchestrator?branch=cw3)",
+ "prost-types",
+]
+
+[[package]]
+name = "cw-schema"
+version = "3.0.3-dev"
+dependencies = [
+ "cw-schema-derive 3.0.3-dev",
+ "indexmap 2.13.1",
+ "schemars 1.2.1",
+ "serde",
+ "serde_with",
+ "siphasher",
+ "typeid",
 ]
 
 [[package]]
@@ -1408,13 +1625,25 @@ name = "cw-schema"
 version = "3.0.3-dev"
 source = "git+https://github.com/permissionlessweb/cosmwasm?branch=mvp#d5586deb95247416a6eaf312c8aa3e283e1d15ca"
 dependencies = [
- "cw-schema-derive",
+ "cw-schema-derive 3.0.3-dev (git+https://github.com/permissionlessweb/cosmwasm?branch=mvp)",
  "indexmap 2.13.1",
  "schemars 1.2.1",
  "serde",
  "serde_with",
  "siphasher",
  "typeid",
+]
+
+[[package]]
+name = "cw-schema-derive"
+version = "3.0.3-dev"
+dependencies = [
+ "heck",
+ "itertools 0.13.0",
+ "owo-colors",
+ "proc-macro2",
+ "quote",
+ "syn 2.0.117",
 ]
 
 [[package]]
@@ -1433,9 +1662,18 @@ dependencies = [
 [[package]]
 name = "cw-storage-plus"
 version = "3.0.1"
+dependencies = [
+ "cosmwasm-std 3.0.3-dev (git+https://github.com/permissionlessweb/cosmwasm?branch=mvp)",
+ "schemars 0.8.22",
+ "serde",
+]
+
+[[package]]
+name = "cw-storage-plus"
+version = "3.0.1"
 source = "git+https://github.com/permissionlessweb/cw-storage-plus?branch=mvp#9cc69e11726116f5d709fde94e05100a0e592fa7"
 dependencies = [
- "cosmwasm-std",
+ "cosmwasm-std 3.0.3-dev (git+https://github.com/permissionlessweb/cosmwasm?branch=mvp)",
  "schemars 0.8.22",
  "serde",
 ]
@@ -1444,23 +1682,46 @@ dependencies = [
 name = "cw-test-migrated"
 version = "0.1.1"
 dependencies = [
- "cosmrs",
- "cosmwasm-schema",
- "cosmwasm-std",
+ "cosmrs 0.23.0",
+ "cosmwasm-schema 3.0.3-dev",
+ "cosmwasm-std 3.0.3-dev",
  "cw-blob 0.2.0 (git+https://github.com/permissionlessweb/cw-packages?branch=feat%2Fcw3)",
- "cw-orch",
+ "cw-orch 0.30.0",
  "cw-orch-clone-testing",
  "cw-orch-daemon",
- "cw-storage-plus",
+ "cw-storage-plus 3.0.1",
 ]
 
 [[package]]
 name = "cw-utils"
 version = "3.0.0"
-source = "git+https://github.com/permissionlessweb/cw-minus?branch=main#47c2b4c18f6d9b7e1b607dc21ee29d7756dc6f06"
 dependencies = [
- "cosmwasm-schema",
- "cosmwasm-std",
+ "cosmwasm-schema 3.0.3-dev (git+https://github.com/permissionlessweb/cosmwasm?branch=mvp)",
+ "cosmwasm-std 3.0.3-dev (git+https://github.com/permissionlessweb/cosmwasm?branch=mvp)",
+ "schemars 0.8.22",
+ "serde",
+ "thiserror 2.0.18",
+]
+
+[[package]]
+name = "cw-utils"
+version = "3.0.0"
+source = "git+https://github.com/permissionlessweb/cw-minus?branch=main#54e7f82f24278a41f29e8f10aa5069ac775e9b99"
+dependencies = [
+ "cosmwasm-schema 3.0.3-dev (git+https://github.com/permissionlessweb/cosmwasm?branch=mvp)",
+ "cosmwasm-std 3.0.3-dev (git+https://github.com/permissionlessweb/cosmwasm?branch=mvp)",
+ "schemars 0.8.22",
+ "serde",
+ "thiserror 2.0.18",
+]
+
+[[package]]
+name = "cw-utils"
+version = "3.0.0"
+source = "git+https://github.com/permissionlessweb/cw-minus?branch=mvp#afd7e90a4d4ede7b4c00f382b6790cb33e4f2c75"
+dependencies = [
+ "cosmwasm-schema 3.0.3-dev (git+https://github.com/permissionlessweb/cosmwasm?branch=mvp)",
+ "cosmwasm-std 3.0.3-dev (git+https://github.com/permissionlessweb/cosmwasm?branch=mvp)",
  "schemars 0.8.22",
  "serde",
  "thiserror 2.0.18",
@@ -1469,11 +1730,11 @@ dependencies = [
 [[package]]
 name = "cw2"
 version = "3.0.0"
-source = "git+https://github.com/permissionlessweb/cw-minus?branch=main#47c2b4c18f6d9b7e1b607dc21ee29d7756dc6f06"
+source = "git+https://github.com/permissionlessweb/cw-minus?branch=main#54e7f82f24278a41f29e8f10aa5069ac775e9b99"
 dependencies = [
- "cosmwasm-schema",
- "cosmwasm-std",
- "cw-storage-plus",
+ "cosmwasm-schema 3.0.3-dev (git+https://github.com/permissionlessweb/cosmwasm?branch=mvp)",
+ "cosmwasm-std 3.0.3-dev (git+https://github.com/permissionlessweb/cosmwasm?branch=mvp)",
+ "cw-storage-plus 3.0.1 (git+https://github.com/permissionlessweb/cw-storage-plus?branch=mvp)",
  "schemars 0.8.22",
  "semver",
  "serde",
@@ -1485,9 +1746,9 @@ name = "cw20"
 version = "3.0.0"
 source = "git+https://github.com/permissionlessweb/cw-plus?branch=main#27c27971a07ee5482c01afa1de3a4e03206e963f"
 dependencies = [
- "cosmwasm-schema",
- "cosmwasm-std",
- "cw-utils",
+ "cosmwasm-schema 3.0.3-dev (git+https://github.com/permissionlessweb/cosmwasm?branch=mvp)",
+ "cosmwasm-std 3.0.3-dev (git+https://github.com/permissionlessweb/cosmwasm?branch=mvp)",
+ "cw-utils 3.0.0 (git+https://github.com/permissionlessweb/cw-minus?branch=main)",
  "schemars 0.8.22",
  "serde",
 ]
@@ -1497,11 +1758,11 @@ name = "cw20-ics20"
 version = "3.0.0"
 source = "git+https://github.com/permissionlessweb/cw-plus?branch=main#27c27971a07ee5482c01afa1de3a4e03206e963f"
 dependencies = [
- "cosmwasm-schema",
- "cosmwasm-std",
+ "cosmwasm-schema 3.0.3-dev (git+https://github.com/permissionlessweb/cosmwasm?branch=mvp)",
+ "cosmwasm-std 3.0.3-dev (git+https://github.com/permissionlessweb/cosmwasm?branch=mvp)",
  "cw-controllers",
- "cw-storage-plus",
- "cw-utils",
+ "cw-storage-plus 3.0.1 (git+https://github.com/permissionlessweb/cw-storage-plus?branch=mvp)",
+ "cw-utils 3.0.0 (git+https://github.com/permissionlessweb/cw-minus?branch=main)",
  "cw2",
  "cw20",
  "schemars 0.8.22",
@@ -1948,9 +2209,9 @@ checksum = "2acce4a10f12dc2fb14a218589d4f1f62ef011b2d0cc4b3cb1bba8e94da14649"
 
 [[package]]
 name = "fastrand"
-version = "2.4.0"
+version = "2.4.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a043dc74da1e37d6afe657061213aa6f425f855399a11d3463c6ecccc4dfda1f"
+checksum = "9f1f227452a390804cdb637b74a86990f2a7d7ba4b7d5693aac9b4dd6defd8d6"
 
 [[package]]
 name = "ff"
@@ -2608,13 +2869,13 @@ source = "git+https://github.com/permissionlessweb/ibc-proto-rs?branch=main#675e
 dependencies = [
  "base64 0.22.1",
  "bytes",
- "cosmos-sdk-proto",
+ "cosmos-sdk-proto 0.28.0 (git+https://github.com/permissionlessweb/cosmos-rust?branch=main)",
  "flex-error",
  "ics23",
  "informalsystems-pbjson 0.7.0 (git+https://github.com/permissionlessweb/pbjson?branch=main)",
  "prost",
  "subtle-encoding",
- "tendermint-proto",
+ "tendermint-proto 0.40.4 (git+https://github.com/permissionlessweb/tendermint-rs?branch=main)",
  "tonic",
  "tonic-prost",
 ]
@@ -4856,6 +5117,34 @@ dependencies = [
 [[package]]
 name = "tendermint"
 version = "0.40.4"
+dependencies = [
+ "bytes",
+ "digest 0.10.7",
+ "ed25519",
+ "ed25519-consensus",
+ "flex-error",
+ "futures",
+ "k256",
+ "num-traits",
+ "once_cell",
+ "prost",
+ "ripemd",
+ "serde",
+ "serde_bytes",
+ "serde_json",
+ "serde_repr",
+ "sha2 0.10.9",
+ "signature",
+ "subtle",
+ "subtle-encoding",
+ "tendermint-proto 0.40.4",
+ "time",
+ "zeroize",
+]
+
+[[package]]
+name = "tendermint"
+version = "0.40.4"
 source = "git+https://github.com/permissionlessweb/tendermint-rs?branch=main#84af40465b4b393d66f0761d90b2863ff0f7191a"
 dependencies = [
  "bytes",
@@ -4877,7 +5166,7 @@ dependencies = [
  "signature",
  "subtle",
  "subtle-encoding",
- "tendermint-proto",
+ "tendermint-proto 0.40.4 (git+https://github.com/permissionlessweb/tendermint-rs?branch=main)",
  "time",
  "zeroize",
 ]
@@ -4890,9 +5179,22 @@ dependencies = [
  "flex-error",
  "serde",
  "serde_json",
- "tendermint",
+ "tendermint 0.40.4 (git+https://github.com/permissionlessweb/tendermint-rs?branch=main)",
  "toml",
  "url",
+]
+
+[[package]]
+name = "tendermint-proto"
+version = "0.40.4"
+dependencies = [
+ "bytes",
+ "flex-error",
+ "prost",
+ "serde",
+ "serde_bytes",
+ "subtle-encoding",
+ "time",
 ]
 
 [[package]]
@@ -4929,9 +5231,9 @@ dependencies = [
  "serde_json",
  "subtle",
  "subtle-encoding",
- "tendermint",
+ "tendermint 0.40.4 (git+https://github.com/permissionlessweb/tendermint-rs?branch=main)",
  "tendermint-config",
- "tendermint-proto",
+ "tendermint-proto 0.40.4 (git+https://github.com/permissionlessweb/tendermint-rs?branch=main)",
  "thiserror 1.0.69",
  "time",
  "tokio",
