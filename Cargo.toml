@@ -1,5 +1,6 @@
 [workspace]
 members = ["cw-*", "contracts/*"]
+exclude = ["contracts/test-migrated"]
 
 resolver = "2"
 
