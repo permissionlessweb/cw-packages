@@ -14,21 +14,21 @@ description = "This contract used for testing migration from cw-blob with predic
 [lib]
 crate-type = ["cdylib", "rlib"]
 
+[dependencies]
+cosmwasm-schema = { workspace = true }
+cosmwasm-std = { workspace = true }
+
+[target.'cfg(not(target_arch = "wasm32"))'.dependencies]
+cw-blob = { path = "../cw-blob" }
+cw-orch = { path = "../../../cw-orchestrator/cw-orch" }
+cw-orch-clone-testing = { path = "../../../cw-orchestrator/packages/clone-testing" }
+cw-orch-daemon = { path = "../../../cw-orchestrator/cw-orch-daemon" }
+
+[dev-dependencies]
+cosmrs = { path = "../../../cosmos-rust/cosmrs" }
+cw-storage-plus = { workspace = true }
+
 # Daemon test requires local juno to be running, after that use `cargo test --test daemon`
 [[test]]
 name = "daemon"
 test = false
-
-[dependencies]
-cosmwasm-std = { workspace = true }
-cosmwasm-schema = { workspace = true }
-
-[target.'cfg(not(target_arch = "wasm32"))'.dependencies]
-cw-orch = { git = "https://github.com/permissionlessweb/cw-orchestrator", branch = "zk-mvp" }
-cw-orch-daemon = { git = "https://github.com/permissionlessweb/cw-orchestrator", branch = "zk-mvp" }
-cw-blob = { git = "https://github.com/permissionlessweb/cw-packages", branch = "zk-mvp" }
-cw-orch-clone-testing = { git = "https://github.com/permissionlessweb/cw-orchestrator", branch = "zk-mvp" }
-
-[dev-dependencies]
-cosmrs = { git = "https://github.com/permissionlessweb/cosmos-rust", branch = "zk-mvp" }
-cw-storage-plus = { workspace = true }

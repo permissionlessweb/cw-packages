@@ -1,5 +1,5 @@
 [workspace]
-members = ["cw-*", "contracts/*"]
+members = ["contracts/*", "cw-*"]
 exclude = ["contracts/test-migrated"]
 
 resolver = "2"
@@ -17,10 +17,12 @@ repository = "https://github.com/AbstractSDK/cw-packages"
 license = "GPL-3.0-or-later"
 keywords = ["cosmos", "cosmwasm", "framework"]
 
-
 [workspace.dependencies]
-cosmwasm-schema = { git = "https://github.com/permissionlessweb/cosmwasm", branch = "zk-mvp" }
-cw-storage-plus = { git = "https://github.com/permissionlessweb/cw-storage-plus", branch = "zk-mvp" }
-cosmwasm-std = { git = "https://github.com/permissionlessweb/cosmwasm", branch = "zk-mvp" }
-cw-address-like = { git = "https://github.com/permissionlessweb/cw-plus-plus", branch = "zk-mvp" }
+cosmwasm-schema = { path = "../cosmwasm/packages/schema" }
+cosmwasm-std = { path = "../cosmwasm/packages/std" }
+cw-address-like = { path = "../cw-plus-plus/packages/address-like" }
+cw-storage-plus = { path = "../cw-storage-plus" }
 
+[patch.'https://github.com/permissionlessweb/cw-packages']
+cw-blob = { path = "contracts/cw-blob" }
+cw-clearable = { path = "cw-clearable" }
